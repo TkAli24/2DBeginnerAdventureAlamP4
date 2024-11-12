@@ -9,6 +9,8 @@ public class EnemyControl : MonoBehaviour
     public float changeTime = 3.0f;
 
     Rigidbody2D rigidbody2d;
+
+    bool broken = true;
     float timer;
     int direction = 1;
 
@@ -25,6 +27,10 @@ public class EnemyControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!broken)
+        {
+            return;
+        }
         timer -= Time.deltaTime;
         if (timer < 0 )
         {
@@ -36,6 +42,10 @@ public class EnemyControl : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(!broken)
+        {
+            return;
+        }
         Vector2 position = rigidbody2d.position;
         if(vertical)
         {
@@ -52,7 +62,7 @@ public class EnemyControl : MonoBehaviour
         
         rigidbody2d.MovePosition(position);
     }
-    private void OnCollisionEnter2D(Collision2D other)
+     void OnCollisionEnter2D(Collision2D other)
     {
         RubyController player = other.gameObject.GetComponent<RubyController>();
         if (player != null)
@@ -60,6 +70,12 @@ public class EnemyControl : MonoBehaviour
             player.ChangeHealth(-1);
         }
 
+    }
+    public void Fix()
+    {
+        broken = false;
+        rigidbody2d.simulated = false;
+        animator.SetTrigger("Fixed");
     }
 
 }
