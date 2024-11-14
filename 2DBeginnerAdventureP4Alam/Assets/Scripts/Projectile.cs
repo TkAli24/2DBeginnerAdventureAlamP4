@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.magnitude > 100.0f)
+        if (transform.position.magnitude > 1000.0f)
         {
             Destroy(gameObject);
 
@@ -39,9 +39,8 @@ public class Projectile : MonoBehaviour
         {
             e.Fix();
 
-
-            Destroy(gameObject);
         }
+        Destroy(gameObject);
     }
 }
 
